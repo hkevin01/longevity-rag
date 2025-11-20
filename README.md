@@ -16,6 +16,7 @@ An intelligent Retrieval-Augmented Generation (RAG) system designed to accelerat
 - [Development Roadmap](#-development-roadmap)
 - [Key Features](#-key-features)
 - [Quick Start](#-quick-start)
+- [Embeddings Setup Guide](docs/embeddings-setup.md) 📘
 - [Technical Deep Dive](#-technical-deep-dive)
 
 ---
@@ -339,48 +340,137 @@ Track and analyze **87 longevity biomarkers** across studies:
 ### Prerequisites
 
 - Python 3.9 or higher
-- Docker (recommended for isolated environment)
 - Git
+- *Optional*: Docker (for isolated environment)
+- *Optional*: CUDA GPU (for faster embeddings)
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/longevity-rag.git
+   git clone https://github.com/hkevin01/longevity-rag.git
    cd longevity-rag
    ```
 
-2. **Set up environment variables**
+2. **Install dependencies**
    ```bash
-   cp .env.example .env
-   # Edit .env with your API keys and configuration
-   ```
-
-3. **Using Docker (Recommended)**
-   ```bash
-   docker-compose up -d
-   ```
-
-4. **Or install locally**
-   ```bash
+   # Install all dependencies (including ML stack)
    pip install -r requirements.txt
+
+   # Or install minimal dependencies (use mock embeddings for testing)
+   pip install numpy pandas pydantic
+   ```
+
+3. **Configure environment variables**
+   ```bash
+   # Copy the example environment file
+   cp .env.example .env
+
+   # Edit .env and set your configuration:
+   # Required for OpenAI-powered generation:
+   OPENAI_API_KEY=your_openai_api_key_here
+
+   # Optional: Enable real embeddings and LLM (default: mock mode for testing)
+   USE_REAL_EMBEDDINGS=true   # Requires transformers+torch (1GB+ download)
+   USE_OPENAI=true             # Requires OPENAI_API_KEY
+
+   # Optional: Neo4j knowledge graph (not required for MVP)
+   NEO4J_URI=bolt://localhost:7687
+   NEO4J_USER=neo4j
+   NEO4J_PASSWORD=your_password
+   ```
+
+   **Environment Variable Reference:**
+
+   | Variable | Required | Default | Description |
+   |----------|----------|---------|-------------|
+   | `OPENAI_API_KEY` | Only if `USE_OPENAI=true` | - | OpenAI API key for GPT-4 |
+   | `USE_REAL_EMBEDDINGS` | No | `false` | Use PubMedBERT embeddings (requires transformers) |
+   | `USE_OPENAI` | No | `false` | Use OpenAI for answer generation |
+   | `NEO4J_URI` | No | - | Neo4j URI (knowledge graph disabled if not set) |
+   | `NEO4J_USER` | No | - | Neo4j username |
+   | `NEO4J_PASSWORD` | No | - | Neo4j password |
+   | `LOG_LEVEL` | No | `INFO` | Logging level (DEBUG, INFO, WARNING, ERROR) |
+
+4. **Set up sample data**
+   ```bash
+   # Place your PubMed papers (JSON format) in:
+   mkdir -p data/raw/sample_pubmed
+
+   # Sample format:
+   # {
+   #   "pmid": "PMID:12345",
+   #   "title": "Paper title",
+   #   "abstract": "Paper abstract text..."
+   # }
+   ```
+
+5. **Build the index**
+   ```bash
+   # Using mock embeddings (fast, no ML dependencies - great for testing)
+   python scripts/ingest_sample.py
+
+   # Using real PubMedBERT embeddings (requires transformers+torch)
+   USE_REAL_EMBEDDINGS=true python scripts/ingest_sample.py
+
+   # Using GPU (much faster for real embeddings)
+   USE_REAL_EMBEDDINGS=true python scripts/ingest_sample.py --device cuda
    ```
 
 ### Basic Usage
 
-```python
-from src.rag import LongevityRAG
+**Python API:**
 
-# Initialize the RAG system
+```python
+from src.rag.core import LongevityRAG
+from src.nlp.embeddings import Embeddings
+from src.rag.generator import LLMGenerator
+
+# Initialize with mock mode (no API keys required)
 rag = LongevityRAG()
+
+# Or initialize with real embeddings and OpenAI
+embedder = Embeddings(use_mock=False)  # Real PubMedBERT
+generator = LLMGenerator(provider="openai", model="gpt-4")
+rag = LongevityRAG(embedder=embedder, generator=generator)
 
 # Ask a question
 question = "What are the effects of rapamycin on lifespan in mice?"
-answer = rag.query(question)
+result = rag.query(question)
 
-print(f"Answer: {answer.text}")
-print(f"Citations: {answer.citations}")
+print(f"Answer: {result['text']}")
+print(f"Citations: {result['citations']}")
+print(f"Confidence: {result['confidence']:.2f}")
 ```
+
+**REST API:**
+
+```bash
+# Start the FastAPI server
+uvicorn src.api.server:app --reload --host 0.0.0.0 --port 8000
+
+# In another terminal, query the API
+curl -X POST "http://localhost:8000/api/v1/query" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "question": "What are the effects of rapamycin on lifespan?",
+    "max_results": 10
+  }'
+
+# Build index via API (admin endpoint)
+curl -X POST "http://localhost:8000/api/v1/admin/build-index" \
+  -H "Content-Type: application/json" \
+  -d '{"force": false}'
+
+# Check system status
+curl "http://localhost:8000/api/v1/status"
+```
+
+**Interactive Documentation:**
+
+Once the server is running, visit:
+- Swagger UI: http://localhost:8000/
+- ReDoc: http://localhost:8000/redoc
 
 ## 📁 Project Structure
 

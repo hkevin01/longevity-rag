@@ -6,10 +6,20 @@ is not present the class will raise a clear error instructing the user to run
 the ingestion script.
 
 Usage:
+    # With default settings (tries real embeddings, falls back to mock)
     from src.rag.core import LongevityRAG
-    rag = LongevityRAG(index_path="data/embeddings/faiss_index.bin",
-                       metadata_path="data/processed/metadata.jsonl")
+    rag = LongevityRAG()
     resp = rag.query("What are the effects of rapamycin on lifespan?")
+
+    # Force mock embeddings (useful for testing)
+    from src.nlp.embeddings import Embeddings
+    rag = LongevityRAG(embedder=Embeddings(use_mock=True))
+
+    # Use custom paths
+    rag = LongevityRAG(
+        index_path="data/embeddings/faiss_index",
+        metadata_path="data/processed/metadata.jsonl"
+    )
 
 """
 
@@ -34,15 +44,21 @@ class LongevityRAG:
 
     def __init__(
         self,
-        index_path: str = "data/embeddings/faiss_index.bin",
+        index_path: str = "data/embeddings/faiss_index",
         metadata_path: str = "data/processed/metadata.jsonl",
         embedder: Optional[Embeddings] = None,
         generator: Optional[LLMGenerator] = None,
+        use_mock_embeddings: bool = False,
     ) -> None:
         self.index_path = Path(index_path)
         self.metadata_path = Path(metadata_path)
 
-        self.embedder = embedder or Embeddings()
+        # Initialize embedder (use provided, or create with mock flag)
+        if embedder is not None:
+            self.embedder = embedder
+        else:
+            self.embedder = Embeddings(use_mock=use_mock_embeddings)
+
         self.generator = generator or LLMGenerator()
 
         # Resolve index path (accept with or without .npz)
