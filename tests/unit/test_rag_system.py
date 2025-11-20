@@ -22,7 +22,9 @@ def test_rag_query_structure(tmp_path, monkeypatch):
 
     # Monkeypatch paths
     rag = LongevityRAG(index_path=str(idx_path), metadata_path=str(meta_file))
-    out = rag.query("What is rapamycin?")
+    # Use k=2 since we only have 2 chunks
+    out = rag.query("What is rapamycin?", k=2)
     assert isinstance(out, dict)
     assert "text" in out and "citations" in out and "confidence" in out
+    assert "metadata" in out  # Check new metadata field
 
