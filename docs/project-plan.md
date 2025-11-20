@@ -154,7 +154,6 @@ Extract structured knowledge from unstructured biomedical text.
 
 ### Action Items
 
-- [ ] **Named Entity Recognition (NER)**
   - **Description**: Identify aging-related entities in text
   - **Options**:
     - Fine-tune BioBERT for custom NER
@@ -164,7 +163,6 @@ Extract structured knowledge from unstructured biomedical text.
   - **Deliverables**: NER model/pipeline with entity types (drug, pathway, organism, outcome)
   - **Success Criteria**: >0.85 F1 score on biomedical NER benchmark
 
-- [ ] **Relation Extraction**
   - **Description**: Extract relationships between entities
   - **Options**:
     - Dependency parsing with spaCy
@@ -174,6 +172,7 @@ Extract structured knowledge from unstructured biomedical text.
   - **Deliverables**: Relation extraction pipeline with confidence scores
   - **Success Criteria**: >0.75 F1 on relation extraction task
 
+Note: NER & Relation Extraction are NOT implemented in this MVP. See issue #TODO for tracking. These modules have stubs under `src/nlp/ner.py` and will be implemented in Phase 3.
 - [ ] **Intervention-Outcome Mapping**
   - **Description**: Link interventions (drugs, lifestyle) to outcomes (lifespan, healthspan)
   - **Options**:
