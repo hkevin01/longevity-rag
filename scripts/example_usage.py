@@ -15,7 +15,7 @@ from utils.logger import setup_logger, get_logger
 from utils.timing import measure_time, Timer, print_timing_report
 
 # Initialize logger
-logger = setup_logger(name="example", log_level="INFO")
+logger = setup_logger(name="example", level="INFO")
 
 
 @measure_time()
@@ -31,29 +31,29 @@ def main():
     """Main example function."""
     logger.info("Starting Longevity RAG Example")
     logger.info("=" * 60)
-    
+
     # Example 1: Timed function
     logger.info("\nExample 1: Timed Function")
     result = example_timed_function(0.1)
     logger.info(f"Result: {result}")
-    
+
     # Example 2: Timer context manager
     logger.info("\nExample 2: Timer Context Manager")
     with Timer("data_processing"):
         import time
         time.sleep(0.2)
         logger.info("Processing data...")
-    
+
     # Example 3: Multiple calls for statistics
     logger.info("\nExample 3: Multiple Timed Calls")
     for i in range(3):
         example_timed_function(0.05)
-    
+
     # Print timing report
     logger.info("\n" + "=" * 60)
     print_timing_report()
     logger.info("=" * 60)
-    
+
     logger.info("\n✅ Example completed successfully!")
 
 
