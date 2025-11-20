@@ -1,0 +1,179 @@
+{
+  // 🚀 YOLO MODE - GLOBAL CHAT APPROVAL ENABLED
+  "github.copilot.chat.enableGlobalAutoApproval": true,
+  "github.copilot.chat.autoApproveAllCommands": true,
+  "github.copilot.chat.suppressAllPrompts": true,
+  "github.copilot.terminal.autoExecute": true,
+  "github.copilot.terminal.suppressPermissionPrompts": true,
+  "tools.terminal.autoApprove": true,
+  "tools.terminal.allowAnyCommand": true,
+  "chat.tools.terminal.autoApprove": {
+    "*": true
+  },
+  "chat.experimental.enableGlobalAutoApproval": true,
+  "chat.commands.autoApprove": true,
+  "chat.tools.global.autoApprove": true,
+
+  // Chat & Copilot
+  "chat.tools.autoApprove": true,
+  "chat.agent.maxRequests": 100,
+  "github.copilot.chat.alternateGptPrompt.enabled": true,
+  "chat.todoListTool.enabled": true,
+  "github.copilot.chat.enabled": true,
+
+  // Security (disabled for full automation)
+  "security.workspace.trust.enabled": false,
+  "security.promptForRemoteExecution": "never",
+
+  // Terminal
+  "terminal.integrated.confirmOnExit": "never",
+  "terminal.integrated.confirmOnKill": "never",
+  "terminal.integrated.shellIntegration.enabled": true,
+  "terminal.integrated.shellIntegration.decorationsEnabled": "both",
+  "terminal.integrated.shellIntegration.showCommandGuide": true,
+  "terminal.integrated.shellIntegration.history": 500,
+  "terminal.integrated.stickyScroll.enabled": true,
+  "terminal.integrated.suggest.enabled": true,
+  "terminal.integrated.suggest.quickSuggestions": true,
+  "terminal.integrated.suggest.suggestOnTriggerCharacters": ["/"],
+  "terminal.integrated.suggest.selectionMode": "first",
+  "terminal.integrated.suggest.runOnEnter": "insert",
+  "terminal.integrated.suggest.inlineSuggestion": "auto",
+  "terminal.integrated.suggest.showStatusBar": true,
+
+  // Git
+  "git.confirmSync": false,
+  "git.autofetch": true,
+
+  // Extensions
+  "extensions.autoUpdate": true,
+  "extensions.autoCheckUpdates": true,
+
+  // General File Settings
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.eol": "\n",
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+
+  // TypeScript/JavaScript
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+
+  // Python - Modern Standards
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.autoImportCompletions": true,
+  "python.formatting.provider": "black",
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.linting.flake8Enabled": true,
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.languageServer": "Pylance",
+  "[python]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.rulers": [88, 120],
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+
+  // Python Naming Conventions (enforced via pylint)
+  "python.linting.pylintArgs": [
+    "--disable=C0111",
+    "--max-line-length=120",
+    "--good-names=i,j,k,x,y,z,df,np,pd",
+    "--class-naming-style=PascalCase",
+    "--function-naming-style=snake_case",
+    "--method-naming-style=snake_case",
+    "--variable-naming-style=snake_case",
+    "--const-naming-style=UPPER_CASE",
+    "--module-naming-style=snake_case"
+  ],
+
+  // C/C++ - Modern Standards
+  "C_Cpp.default.cppStandard": "c++20",
+  "C_Cpp.default.cStandard": "c17",
+  "C_Cpp.clang_format_style": "{ BasedOnStyle: Google, IndentWidth: 2, ColumnLimit: 100 }",
+  "C_Cpp.codeAnalysis.clangTidy.enabled": true,
+  "C_Cpp.codeAnalysis.clangTidy.args": [
+    "--checks=modernize-*,readability-*,performance-*"
+  ],
+  "[cpp]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true
+  },
+  "[c]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true
+  },
+
+  // C++ Naming Conventions (via clang-tidy)
+  // Classes: PascalCase (e.g., MyClass)
+  // Functions/Methods: camelCase (e.g., myFunction)
+  // Variables: snake_case (e.g., my_variable)
+  // Constants: UPPER_CASE (e.g., MY_CONSTANT)
+  // Files: snake_case.cpp/snake_case.h
+
+  // Java - Modern Standards
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.format.settings.profile": "GoogleStyle",
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-21",
+      "path": "/usr/lib/jvm/java-21-openjdk",
+      "default": true
+    }
+  ],
+  "[java]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true
+  },
+
+  // Java Naming Conventions (enforced by checkstyle/formatter)
+  // Classes/Interfaces: PascalCase (e.g., MyClass)
+  // Methods: camelCase (e.g., myMethod)
+  // Variables: camelCase (e.g., myVariable)
+  // Constants: UPPER_CASE (e.g., MY_CONSTANT)
+  // Packages: lowercase (e.g., com.example.mypackage)
+  // Files: PascalCase.java (matching class name)
+
+  // File Associations
+  "files.associations": {
+    "*.py": "python",
+    "*.cpp": "cpp",
+    "*.h": "cpp",
+    "*.java": "java",
+    "Dockerfile": "dockerfile",
+    "*.md": "markdown"
+  },
+
+  // Editor
+  "editor.rulers": [80, 100, 120],
+  "editor.renderWhitespace": "boundary",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.suggestSelection": "first",
+
+  // Search
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "**/data/raw": true,
+    "**/data/processed": true,
+    "**/data/embeddings": true,
+    "**/__pycache__": true,
+    "**/.pytest_cache": true
+  }
+}

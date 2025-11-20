@@ -1,0 +1,41 @@
+{
+  "project": {
+    "name": "Longevity RAG System",
+    "type": "python",
+    "domain": "biomedical-ai",
+    "focus": [
+      "longevity research",
+      "aging biology",
+      "biomedical NLP",
+      "knowledge graphs",
+      "RAG systems"
+    ]
+  },
+  "preferences": {
+    "codeStyle": "modern-pythonic",
+    "documentation": "comprehensive",
+    "testing": "pytest",
+    "errorHandling": "graceful-with-logging",
+    "namingConventions": {
+      "classes": "PascalCase",
+      "functions": "snake_case",
+      "variables": "snake_case",
+      "constants": "UPPER_CASE",
+      "files": "snake_case"
+    }
+  },
+  "context": {
+    "biomedicalTerms": [
+      "mTOR", "AMPK", "senescence", "autophagy", "geroprotector",
+      "epigenetic clock", "healthspan", "lifespan", "biomarker",
+      "proteomics", "transcriptomics", "geroscience"
+    ],
+    "frameworks": [
+      "LangChain",
+      "transformers",
+      "scikit-learn",
+      "pandas",
+      "numpy"
+    ]
+  }
+}

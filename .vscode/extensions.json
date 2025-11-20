@@ -1,0 +1,21 @@
+{
+  "recommendations": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-python.black-formatter",
+    "ms-toolsai.jupyter",
+    "github.copilot",
+    "github.copilot-chat",
+    "ms-vscode.cpptools",
+    "ms-vscode.cpptools-extension-pack",
+    "vscjava.vscode-java-pack",
+    "redhat.java",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "eamodio.gitlens",
+    "ms-azuretools.vscode-docker",
+    "yzhang.markdown-all-in-one",
+    "davidanson.vscode-markdownlint",
+    "streetsidesoftware.code-spell-checker"
+  ]
+}
